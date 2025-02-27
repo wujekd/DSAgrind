@@ -23,6 +23,7 @@
 #                    \______/                                                                                                                                 
 
 
+
 # debug mode to skip taking user inputs
 debug=0
 if [ "$debug" -eq 1 ]; then
@@ -30,7 +31,7 @@ if [ "$debug" -eq 1 ]; then
     resource_count=3
     
     # example values
-    work=(  )
+    work=( 3 3 2 )
     max=( 6 4 3 3 2 2 4 3 3 )
     alloc=( 2 2 1 1 0 0 2 1 1 )
 
@@ -42,7 +43,6 @@ else
     read -ra alloc
     echo "Input the max claimed use data for all the processes: "
     read -ra max
-
     echo "Enter the initial resource levels available in the system: "
     read -ra work
 fi
@@ -65,11 +65,11 @@ init_need() {
 
 
 #  __ _           _                                            
-# / _(_)_ __   __| |  ___  ___  __ _ _   _  ___ _ __   ___ ___ 
-#| |_| | '_ \ / _` | / __|/ _ \/ _` | | | |/ _ | '_ \ / __/ _ \
-#|  _| | | | | (_| | \__ |  __| (_| | |_| |  __| | | | (_|  __/
-#|_| |_|_| |_|\__,_| |___/\___|\__, |\__,_|\___|_| |_|\___\___|
-#                                 |_|                      
+# / _(_)_ __   __| |   ___  ___  __ _ _   _  ___ _ __   ___ ___ 
+#| |_| | '_ \ / _` |  / __|/ _ \/ _` | | | |/ _ | '_ \ / __/ _ \
+#|  _| | | | | (_| |  \__ |  __| (_| | |_| |  __| | | | (_|  __/
+#|_| |_|_| |_|\__,_|  |___/\___|\__, |\__,_|\___|_| |_|\___\___|
+#                                  |_|                      
 
 find_safe_sequence(){
     local -a local_work=( "${work[@]}" )
@@ -79,7 +79,8 @@ find_safe_sequence(){
     local -a safe_seq=()
 
     # Initialize p_status and safe_seq
-    for (( i=0; i<process_count; i++ )); do
+    for (( i=0; i<process_count; i++ ));
+    do
         p_status+=(0)
         safe_seq+=(0)
     done
@@ -87,7 +88,8 @@ find_safe_sequence(){
     local count=0 # cout finished processes
 
     # Try to find a sequence that satisfies all processes
-    while [ $count -lt $process_count ]; do
+    while [ $count -lt $process_count ];
+    do
 
         local found_any=false
 
@@ -140,11 +142,11 @@ find_safe_sequence(){
 
 
 #           _     _                                    
-#  __ _  __| | __| |  _ __  _ __ ___   ___ ___ ___ ___ 
-# / _` |/ _` |/ _` | | '_ \| '__/ _ \ / __/ _ / __/ __|
-#| (_| | (_| | (_| | | |_) | | | (_) | (_|  __\__ \__ \
-# \__,_|\__,_|\__,_| | .__/|_|  \___/ \___\___|___|___/
-#                    |_|                    
+#  __ _  __| | __| |   _ __  _ __ ___   ___ ___ ___ ___ 
+# / _` |/ _` |/ _` |  | '_ \| '__/ _ \ / __/ _ / __/ __|
+#| (_| | (_| | (_| |  | |_) | | | (_) | (_|  __\__ \__ \
+# \__,_|\__,_|\__,_|  | .__/|_|  \___/ \___\___|___|___/
+#                     |_|                    
 add_process() {
     echo "Enter $resource_count integers for the new process's MAX needs, separated by spaces:"
     read -ra new_max  # read into array
@@ -180,7 +182,7 @@ echo
 
 #                 _        ___  
 # _ __ ___   __ _(_)_ __  / \ \ 
-#| '_ ` _ \ / _` | | '_ \| | | | SHOULD THERE BE A FUNCTION FOR THIS CODE?
+#| '_ ` _ \ / _` | | '_ \| | | |
 #| | | | | | (_| | | | | | | | |
 #|_| |_| |_|\__,_|_|_| |_| | | |
 # The program starts here \_/_/
