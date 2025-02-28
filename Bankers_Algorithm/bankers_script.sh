@@ -10,8 +10,8 @@
 #| $$$$$$$/|  $$$$$$$| $$  | $$| $$ \  $$|  $$$$$$$| $$       /$$$$$$$/   
 #|_______/  \_______/|__/  |__/|__/  \__/ \_______/|__/      |_______/    
 #                                                                         
-#       /$$$$$$  /$$                               /$$   /$$     /$$                                                                                                              |  $$$$$$/                                                          
-#      /$$__  $$| $$                              |__/  | $$    | $$                                                                                                         \______/                                                        
+#       /$$$$$$  /$$                               /$$   /$$     /$$                                                                                                                                          
+#      /$$__  $$| $$                              |__/  | $$    | $$                                                                            
 #     | $$  \ $$| $$  /$$$$$$   /$$$$$$   /$$$$$$  /$$ /$$$$$$  | $$$$$$$  /$$$$$$/$$$$ 
 #     | $$$$$$$$| $$ /$$__  $$ /$$__  $$ /$$__  $$| $$|_  $$_/  | $$__  $$| $$_  $$_  $$
 #     | $$__  $$| $$| $$  \ $$| $$  \ $$| $$  \__/| $$  | $$    | $$  \ $$| $$ \ $$ \ $$
@@ -22,45 +22,6 @@
 #                   |  $$$$$$/                                           
 #                    \______/                                                                                                                                 
 
-
-
-# debug mode to skip taking user inputs
-debug=0
-if [ "$debug" -eq 1 ]; then
-    process_count=3
-    resource_count=3
-    
-    # example values
-    work=( 3 3 2 )
-    max=( 6 4 3 3 2 2 4 3 3 )
-    alloc=( 2 2 1 1 0 0 2 1 1 )
-
-else
-    read -p "Input the process count: " process_count
-    read -p "Input the resource count: " resource_count
-
-    echo "Input the allocated data for all the processes: "
-    read -ra alloc
-    echo "Input the max claimed use data for all the processes: "
-    read -ra max
-    echo "Enter the initial resource levels available in the system: "
-    read -ra work
-fi
-
-need=()
-#function to calculate need for all the processes based on max and alloc values 
-init_need() {
-  for (( i=0; i<process_count; i++ ))
-  do
-    for (( j=0; j<resource_count; j++ ))
-    do
-      index=$(( i*resource_count + j ))
-      # need = max - alloc
-      value=$(( max[index] - alloc[index] ))
-      need[$index]=$value
-    done
-  done
-}
 
 
 
@@ -78,7 +39,7 @@ find_safe_sequence(){
     local -a p_status=()  # 0 = not finished, 1 = finished
     local -a safe_seq=()
 
-    # Initialize p_status and safe_seq
+    # init p_status and safe_seq
     for (( i=0; i<process_count; i++ ));
     do
         p_status+=(0)
@@ -122,8 +83,7 @@ find_safe_sequence(){
             fi
         done
 
-        # If we couldn't find any process to run in this iteration,
-        # the system is not in a safe state!!!
+        # if while loop run (finished count < process count) and no process was solved in the iteration then:
         if ! $found_any; then
             echo "ERROR! System is NOT in a safe state."
             return 1
@@ -155,17 +115,10 @@ add_process() {
         return
     fi
 
-    echo "Enter $resource_count integers for the new process's ALLOC, separated by spaces:"
-    read -ra new_alloc
-    if [ ${#new_alloc[@]} -ne $resource_count ]; then
-        echo "Invalid input. Must have exactly $resource_count integers."
-        return
-    fi
-
     # Append to max, alloc
     for (( i=0; i<resource_count; i++ )); do
-        max+=( "${new_max[$i]}" )
-        alloc+=( "${new_alloc[$i]}" )
+        max+=( "${new_max[$i]}" ) # new process claims its max use
+        alloc+=( 0 ) # alloc always 0 on a newly added process
     done
 
     # Increase process_count by 1
@@ -187,9 +140,47 @@ echo
 #|_| |_| |_|\__,_|_|_| |_| | | |
 # The program starts here \_/_/
 
+#loading the data
 
+# debug mode to skip taking user inputs
+debug=0
+if [ "$debug" -eq 1 ]; then
+    process_count=3
+    resource_count=3
+    
+    # example values
+    work=( 3 3 2 )
+    max=( 6 4 3 3 2 2 4 3 3 )
+    alloc=( 2 2 1 1 0 0 2 1 1 )
+
+else
+    read -p "Input the process count: " process_count
+    read -p "Input the resource count: " resource_count
+
+    echo "Input the allocated data for all the processes: "
+    read -ra alloc
+    echo "Input the max claimed use data for all the processes: "
+    read -ra max
+    echo "Enter the initial resource levels available in the system: "
+    read -ra work
+fi
+
+need=()
+init_need() {
+  for (( i=0; i<process_count; i++ ))
+  do
+    for (( j=0; j<resource_count; j++ ))
+    do
+      index=$(( i*resource_count + j ))
+      # need = max - alloc
+      value=$(( max[index] - alloc[index] ))
+      need[$index]=$value
+    done
+  done
+}
 # calculate the need for the processes
 init_need
+
 
 # initial evaluation of the provided system snapshot
 echo "Checking for the safe sequence..."
@@ -210,7 +201,7 @@ while true; do
                 echo "closing the script"
                 exit 0
             fi
-            # check system
+            # echo ${alloc[@]}
             ;;
         0)
             echo "Goodbye!"
@@ -222,5 +213,4 @@ while true; do
     esac
 
     echo
-
 done
