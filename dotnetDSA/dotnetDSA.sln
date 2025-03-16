@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "algos1", "algos1\algos1.csproj", "{C3E8A8D5-FF7E-4993-88AC-C85EE8FBAE4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{8D7AACD9-67A6-461E-A87D-09C9208B4C7B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3E8A8D5-FF7E-4993-88AC-C85EE8FBAE4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3E8A8D5-FF7E-4993-88AC-C85EE8FBAE4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3E8A8D5-FF7E-4993-88AC-C85EE8FBAE4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3E8A8D5-FF7E-4993-88AC-C85EE8FBAE4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D7AACD9-67A6-461E-A87D-09C9208B4C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D7AACD9-67A6-461E-A87D-09C9208B4C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D7AACD9-67A6-461E-A87D-09C9208B4C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D7AACD9-67A6-461E-A87D-09C9208B4C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
