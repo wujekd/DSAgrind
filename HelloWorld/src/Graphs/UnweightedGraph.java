@@ -20,6 +20,7 @@ public class UnweightedGraph<V> {
 		createAdjencyLists(edges, vertices.length);
 		
 	}
+	
 	// construct from lists
 	protected UnweightedGraph(List<V> vertices, List<Edge> edges) {
 		for (int i =0; i < vertices.size(); i++) {
@@ -52,6 +53,11 @@ public class UnweightedGraph<V> {
 			return false;
 		}
 	}
+	
+	public boolean addEdge(int u, int v) {
+		return addEdge(new Edge(u,v));
+	}
+	
 	public boolean addEdge(Edge e) {
 		if (e.u < 0 || e.u > getSize() -1) {
 			throw new IllegalArgumentException("no such index" + e.u);
@@ -65,6 +71,7 @@ public class UnweightedGraph<V> {
 		}
 		return false;
 	}
+	
 	
 // Depth first search
 	public SearchTree dfs(int v) {
@@ -124,9 +131,7 @@ public class UnweightedGraph<V> {
 	
 	
 	
-	public boolean addEdge(int u, int v) {
-		return addEdge(new Edge(u,v));
-	}
+
 
 	public int getSize() {
 		return vertices.size();
@@ -134,7 +139,7 @@ public class UnweightedGraph<V> {
 	public List<V> getVertices() {
 		return vertices;
 	}
-	public List<Edge> getEdges(){
+	public List<List<Edge>> getEdges(){
 		return neighbors;
 	}
 	
@@ -149,6 +154,19 @@ public class UnweightedGraph<V> {
 			this.setRoot(root);
 			this.setParent(parent);
 			this.setSearchOrder(searchOrder);
+		}
+		
+		public List<Integer> getPath(int exit) {
+			List<Integer> path = new ArrayList<>();
+			int current = exit;
+			
+			while (current != -1) {
+				path.add(0, current);
+				current = parent[current];
+			}
+			
+			return path;
+			
 		}
 
 		public int[] getParent() {
