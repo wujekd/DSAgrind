@@ -80,6 +80,16 @@ public class Displayer1 extends Application {
 	    	drawSearch(gc, tree, rows, cols);
 	    });
 	    delay.play();
+	    
+	    double delayMs2 = rows * cols * 125 * 2.3;
+	    PauseTransition delay2 = new PauseTransition(Duration.millis(delayMs2));
+	    delay2.setOnFinished(e -> {
+	    	SearchTree tree = graph.bfs(0);
+	    	drawPath(gc, tree, 6, rows, cols);
+	    });
+	    delay2.play();
+	    
+	    
 	    }
 	
 	public void showMaze(GraphicsContext gc, UnweightedGraph<Integer> graph, int rows, int cols) {
@@ -149,7 +159,7 @@ public class Displayer1 extends Application {
 	                        if (fcell.left)   gc.strokeLine(fx, fy, fx, fy + cellHeight);
 	                    });
 
-	                    Thread.sleep(125);
+	                    Thread.sleep(95);
 	                    
 	                }
 	            }
@@ -188,7 +198,7 @@ public class Displayer1 extends Application {
 	                        gc.strokeLine(x1, y1, x2, y2);
 	                    });
 
-	                    Thread.sleep(150); // Delay between steps
+	                    Thread.sleep(120); // Delay between steps
 	                }
 	            }
 	        } catch (InterruptedException e) {
@@ -196,9 +206,35 @@ public class Displayer1 extends Application {
 	        }
 	    }).start();
 	}
-
 	
-	// implement drawPath();
+	public void drawPath(GraphicsContext gc, SearchTree tree, int exit, int rows, int cols) {
+		System.out.println(tree.getPath(exit));
+		gc.setLineWidth(18);
+		gc.setStroke(Color.rgb(55, 125, 150)); 
+	    List<Integer> path = tree.getPath(exit);
+	    if (path.size() < 2) return; // nothing to draw if the path is too short
+
+	    double cellWidth = (double) SCREEN_WIDTH / cols;
+	    double cellHeight = (double) SCREEN_HEIGHT / rows;
+
+	    for (int i = 0; i < path.size() - 1; i++) {
+	        int v1 = path.get(i);
+	        int v2 = path.get(i + 1);
+
+	        int r1 = v1 / cols;
+	        int c1 = v1 % cols;
+	        int r2 = v2 / cols;
+	        int c2 = v2 % cols;
+
+	        double x1 = c1 * cellWidth + cellWidth / 2;
+	        double y1 = r1 * cellHeight + cellHeight / 2;
+	        double x2 = c2 * cellWidth + cellWidth / 2;
+	        double y2 = r2 * cellHeight + cellHeight / 2;
+
+	        gc.strokeLine(x1, y1, x2, y2);
+	    }
+	}
+
 	
 	
 	public void showGrid(GraphicsContext gc, int x, int y) {
