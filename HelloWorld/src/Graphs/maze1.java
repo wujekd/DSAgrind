@@ -43,7 +43,7 @@ public class maze1 {
 	
 	
 	
-	private static UnweightedGraph<Integer> createMaze(int x, int y) {
+	public static UnweightedGraph<Integer> createMaze(int x, int y) {
 		
 		UnweightedGraph<Integer> graph = new UnweightedGraph<>(); 
 		
