@@ -1,8 +1,7 @@
 package Graphs;
-
 import java.util.List;
-
 import Graphs.UnweightedGraph.SearchTree;
+
 
 public class maze1 {
 
@@ -20,18 +19,15 @@ public class maze1 {
 		graph.addEdge(7, 6);
 		
 		
-		
 		System.out.println(graph.getVertices());
 		
 		for (List<Edge> edgeArray : graph.getEdges()) {
-			
 			if (edgeArray.isEmpty()) {
 				System.out.print("[] ");
-			} else {
 				
+			} else {
 				// open [
 				for (Edge e : edgeArray) {
-					
 					System.out.printf(" " + e.u + "-" + e.v + " ");
 				}
 				//close ]
@@ -46,6 +42,7 @@ public class maze1 {
 	}
 	
 	
+	
 	private static UnweightedGraph<Integer> createMaze(int x, int y) {
 		
 		UnweightedGraph<Integer> graph = new UnweightedGraph<>(); 
@@ -53,7 +50,6 @@ public class maze1 {
 		for (int i = 0; i < (x * y); i++) {
 			graph.addVertex(i);
 		}
-		 
 		return graph;
 	}
 }

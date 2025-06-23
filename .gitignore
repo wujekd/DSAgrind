@@ -1,1 +1,10 @@
 .DS_Store
+*.class
+HelloWorld/.settings/org.eclipse.jdt.core.prefs
+HelloWorld/src/.classpath
+HelloWorld/.settings/org.eclipse.core.resources.prefs
+HelloWorld/.project
+HelloWorld/.classpath
+HelloWorld/src/.project
+HelloWorld/bin/.classpath
+HelloWorld/bin/.project
