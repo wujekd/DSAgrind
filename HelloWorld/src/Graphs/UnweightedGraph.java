@@ -87,7 +87,6 @@ public class UnweightedGraph<V> {
 		
 		return new SearchTree(v, parent, searchOrder);
 	}
-	
 	private void dfs(int v, int[] parent, List<Integer> searchOrder, boolean[] isVisited) {
 		searchOrder.add(v);
 		isVisited[v] = true;
@@ -144,7 +143,6 @@ public class UnweightedGraph<V> {
 	}
 	
 	
-	
 	public class SearchTree {
 		private int root;
 		private int[] parent;
@@ -166,8 +164,8 @@ public class UnweightedGraph<V> {
 			}
 			
 			return path;
-			
 		}
+		
 
 		public int[] getParent() {
 			return parent;

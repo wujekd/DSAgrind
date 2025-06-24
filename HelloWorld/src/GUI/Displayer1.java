@@ -1,7 +1,5 @@
 package GUI;
-
 import java.util.List;
-
 import Graphs.Edge;
 import Graphs.UnweightedGraph;
 import Graphs.UnweightedGraph.SearchTree;
@@ -18,9 +16,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext; // Needed for drawing
 import javafx.scene.layout.Pane;  
 
-
 public class Displayer1 extends Application {
-
 	int SCREEN_WIDTH = 600;
 	int SCREEN_HEIGHT = 600;
 
@@ -34,8 +30,8 @@ public class Displayer1 extends Application {
 		int SCREEN_WIDTH = 600;
 		int SCREEN_HEIGHT = 600;
 		
-		int cols = 3;
-		int rows = 3;
+		int cols = 8;
+		int rows = 8;
 
 		Canvas canvas = new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -47,16 +43,16 @@ public class Displayer1 extends Application {
 		
 		gc.setLineWidth(6);
 		
-		UnweightedGraph<Integer> graph = maze1.createMaze(3,3);
 		
-		graph.addEdge(0,3);
-		graph.addEdge(3, 4);
-		graph.addEdge(4, 1);
-		graph.addEdge(1, 2);
-		graph.addEdge(2, 5);
-		graph.addEdge(5, 8);
-		graph.addEdge(4, 7);
-		graph.addEdge(7, 6);
+		// create the maze graph with all nodes
+		UnweightedGraph<Integer> graph = maze1.createMazeBase(cols, rows);
+		
+		maze1.generateMaze(graph, cols, rows);
+		
+		
+		
+//		// create fully connected maze structure for the displayer
+
 		
 		showGrid(gc, cols, rows);
 
@@ -73,7 +69,7 @@ public class Displayer1 extends Application {
 	    
 	    showMaze(gc, graph, rows, cols);
 	    
-	    int delayMs = rows * cols * 125;
+	    int delayMs = rows * cols * 22;
 	    PauseTransition delay = new PauseTransition(Duration.millis(delayMs));
 	    delay.setOnFinished(e -> {
 	    	SearchTree tree = graph.bfs(0);
@@ -81,16 +77,18 @@ public class Displayer1 extends Application {
 	    });
 	    delay.play();
 	    
-	    double delayMs2 = rows * cols * 125 * 2.3;
+	    double delayMs2 = rows * cols * 45 * 2.3;
 	    PauseTransition delay2 = new PauseTransition(Duration.millis(delayMs2));
 	    delay2.setOnFinished(e -> {
 	    	SearchTree tree = graph.bfs(0);
 	    	drawPath(gc, tree, 6, rows, cols);
 	    });
-	    delay2.play();
-	    
-	    
+//	    delay2.play();
 	    }
+	
+	public void generateMaze(UnweightedGraph<Integer> graph) {
+		
+	}
 	
 	public void showMaze(GraphicsContext gc, UnweightedGraph<Integer> graph, int rows, int cols) {
 		
@@ -133,7 +131,7 @@ public class Displayer1 extends Application {
 	
 	public void displayMaze(GraphicsContext gc, WallCell[][] wallMap) {
 		gc.setLineWidth(8);
-		gc.setStroke(Color.rgb(255, 165, 0)); 
+		gc.setStroke(Color.rgb(125, 165, 40)); 
 		int rows = wallMap.length;
 		int cols = wallMap[0].length;
 		double cellWidth = (double) SCREEN_WIDTH / cols;
@@ -158,9 +156,7 @@ public class Displayer1 extends Application {
 	                        if (fcell.bottom) gc.strokeLine(fx, fy + cellHeight, fx + cellWidth, fy + cellHeight);
 	                        if (fcell.left)   gc.strokeLine(fx, fy, fx, fy + cellHeight);
 	                    });
-
-	                    Thread.sleep(95);
-	                    
+	                    Thread.sleep(13);
 	                }
 	            }
 	        } catch (InterruptedException e) {
@@ -198,7 +194,7 @@ public class Displayer1 extends Application {
 	                        gc.strokeLine(x1, y1, x2, y2);
 	                    });
 
-	                    Thread.sleep(120); // Delay between steps
+	                    Thread.sleep(70); // Delay between steps
 	                }
 	            }
 	        } catch (InterruptedException e) {
@@ -234,13 +230,11 @@ public class Displayer1 extends Application {
 	        gc.strokeLine(x1, y1, x2, y2);
 	    }
 	}
-
-	
 	
 	public void showGrid(GraphicsContext gc, int x, int y) {
 		// vertical
-		gc.setLineWidth(1);
-		gc.setStroke(Color.rgb(69, 12, 69)); 
+		gc.setLineWidth(2);
+		gc.setStroke(Color.rgb(69, 16, 69)); 
 		for (int i = 0; i < SCREEN_WIDTH; i = i +(SCREEN_WIDTH / y)) {
 			gc.strokeLine(i, 0, i, SCREEN_HEIGHT);
 		}
