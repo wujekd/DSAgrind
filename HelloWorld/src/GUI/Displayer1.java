@@ -16,6 +16,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext; // Needed for drawing
 import javafx.scene.layout.Pane;  
 
+
 public class Displayer1 extends Application {
 	int SCREEN_WIDTH = 600;
 	int SCREEN_HEIGHT = 600;

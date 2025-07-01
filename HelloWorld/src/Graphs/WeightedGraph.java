@@ -83,6 +83,8 @@ public class WeightedGraph<V> extends UnweightedGraph<V> {
 		return addEdge(new WeightedEdge(u, v, weight));
 	}
 	
+	
+	// MST MST MST MST 
 	public MST getMinimumSpanningTree() {
 		return getMinimumSpanningTree(0);
 		}
@@ -127,6 +129,50 @@ public class WeightedGraph<V> extends UnweightedGraph<V> {
 		return new MST(startingVertex, parent, T, totalWeight);
 	}
 	
+	
+	// Dijakstra's
+	public ShortestPathTree getShortestPath(int sourceVertex) {
+		// setting cost stuff
+		double[] cost = new double[getSize()]; // combined cost to get to each node from the source
+		for (int i = 0; i < cost.length; i++) {
+			cost[i] = Double.POSITIVE_INFINITY;
+		}
+		cost[sourceVertex] = 0;
+		
+		//setting the parent tracking to recreate the path
+		int[] parent = new int[getSize()];
+		parent[sourceVertex] = -1; // mark the source vertex in the array
+		
+		List<Integer> T = new ArrayList<>();
+		
+		while (T.size() < getSize()) {
+			// find the smallest cost u in V - T (which node to move to)
+			int u = -1;
+			double currentMinCost = Double.POSITIVE_INFINITY;
+			for (int i = 0; i < getSize(); i++) {
+				if (!T.contains(i) &&  cost[i] < currentMinCost) {
+					currentMinCost = cost[i];
+					u=i;
+				}
+			}
+			if (u == -1) break; else T.add(u); //add newly explored V to T
+			
+			// adjust cost[v] for each v that is adjecent to u
+			for(Edge e : neighbors.get(u)) {
+				if(!T.contains(e.v) && cost[e.v] > cost[u] + ((WeightedEdge)e).weight) {
+					cost[e.v] = cost[u] + ((WeightedEdge)e).weight;
+					parent[e.v] = u;
+				}
+			}
+		} // end of while
+		return new ShortestPathTree(sourceVertex, parent, T, cost);
+	}
+	
+	
+	
+	
+	// TREES
+	//public
 	public class MST extends SearchTree {
 		private double totalWeight;
 		
@@ -138,8 +184,25 @@ public class WeightedGraph<V> extends UnweightedGraph<V> {
 		public double getTotalWeight() {
 			return totalWeight;
 		}
-		
 	}
 	
-	
+	public class ShortestPathTree extends SearchTree {
+		private double[] cost; // cost[v] = cost from v to source
+		
+		public ShortestPathTree(int source, int[] parent, List<Integer> searchOrder, double[] cost) {
+			super(source, parent, searchOrder);
+			this.cost = cost;
+		}
+		
+		public double getCost(int v) {
+			return cost[v];
+		}
+		
+		public void printAllPaths() {
+			System.out.println("All Shortest Paths:");
+			for (int i=0; i < cost.length; i++) {
+				System.out.println(getPath(i));
+			}
+		}
+	}
 }
