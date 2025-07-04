@@ -1,5 +1,4 @@
 package Graphs;
-
 import Graphs.WeightedGraph.MST;
 import Graphs.WeightedGraph.ShortestPathTree;
 
@@ -25,6 +24,15 @@ public class WeightedGraphTest {
 		ShortestPathTree res2 = graph.getShortestPath(0);
 		
 		System.out.println(res2.getSearchOrder());
+		
+		res2.printAllPaths();
+		
+		ShortestPathTree res3 =
+			    MinHeapWithDijakstrasAndPrims.MHDijakstras(graph, 0);
+		
+		System.out.println("min heap Dijakstras test: ");
+		System.out.println(res3.getSearchOrder());
+		res3.printAllPaths();
 	}
 	
 }

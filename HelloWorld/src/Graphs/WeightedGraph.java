@@ -95,7 +95,6 @@ public class WeightedGraph<V> extends UnweightedGraph<V> {
 		for (int i = 0; i < cost.length; i++) {
 			cost[i] = Double.POSITIVE_INFINITY;
 		}
-		
 		cost[startingVertex] = 0;
 		
 		int[] parent = new int[getSize()];
@@ -103,7 +102,7 @@ public class WeightedGraph<V> extends UnweightedGraph<V> {
 		
 		double totalWeight = 0;
 		
-		List<Integer> T = new ArrayList<>();
+		List<Integer> T = new ArrayList<>(); // tracking discovered nodes
 		
 		while(T.size() < getSize()) {
 			int u = -1;
@@ -129,6 +128,16 @@ public class WeightedGraph<V> extends UnweightedGraph<V> {
 		return new MST(startingVertex, parent, T, totalWeight);
 	}
 	
+	// apparently refined Prims algorithm:
+	// while (size of T < n){
+	//	find u not in T with the smallest cost[u]
+	//	add u to T
+	//	for (each v not in T and (u,v) in E){
+	//		if (cost[v] > w(u, v)){
+	//			cost[v] = w(u, v); parent[v] = u;
+	//		}
+	//	}
+	// }
 	
 	// Dijakstra's
 	public ShortestPathTree getShortestPath(int sourceVertex) {
@@ -157,7 +166,7 @@ public class WeightedGraph<V> extends UnweightedGraph<V> {
 			}
 			if (u == -1) break; else T.add(u); //add newly explored V to T
 			
-			// adjust cost[v] for each v that is adjecent to u
+			// adjust cost[v] for each v that is adjacent to u
 			for(Edge e : neighbors.get(u)) {
 				if(!T.contains(e.v) && cost[e.v] > cost[u] + ((WeightedEdge)e).weight) {
 					cost[e.v] = cost[u] + ((WeightedEdge)e).weight;
