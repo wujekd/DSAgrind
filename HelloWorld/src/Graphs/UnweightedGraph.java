@@ -128,9 +128,6 @@ public class UnweightedGraph<V> {
 		return new SearchTree(v, parent, searchOrder);
 	}
 	
-	
-	
-
 
 	public int getSize() {
 		return vertices.size();
@@ -140,6 +137,14 @@ public class UnweightedGraph<V> {
 	}
 	public List<List<Edge>> getEdges(){
 		return neighbors;
+	}
+	
+	public void printEdges() {
+		for (List<Edge> list : neighbors) {
+			for (Edge edge : list) {
+				System.out.println(edge);
+			}
+		}
 	}
 	
 	
@@ -190,7 +195,5 @@ public class UnweightedGraph<V> {
 		public void setRoot(int root) {
 			this.root = root;
 		}
-		
-		
 	}
 }

@@ -1,6 +1,12 @@
 package Graphs;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
+
+import Graphs.UnweightedGraph.SearchTree;
 
 public class LocationGraph {
 
@@ -20,11 +26,45 @@ public class LocationGraph {
 		
 		UnweightedGraph<LocatedNode> graph = new UnweightedGraph<>(nodes, edges);
 		
+		//graph.printEdges();
+		UnweightedGraph<LocatedNode>.SearchTree result = BeFS(graph, nodes[0], nodes[4]);
 		
-		for (List<Edge> list : graph.getEdges()) {
-			for (Edge edge : list) {
-				System.out.println(edge);
+		System.out.println(result.getPath(4));
+	}
+	
+	public static UnweightedGraph<LocatedNode>.SearchTree BeFS(UnweightedGraph<LocatedNode> graph, LocatedNode start, LocatedNode goal){
+		
+		List<List<Edge>> neighbors = graph.getEdges();
+		int n = graph.getSize();
+		
+		Comparator<Integer> cmp = Comparator.comparingDouble(id ->{
+			LocatedNode node = graph.getVertices().get(id);
+			return Math.hypot(node.x - goal.x, node.y - goal.y);
+		});
+		
+		PriorityQueue<Integer> queue = new PriorityQueue<>(cmp);
+		boolean[] visited = new boolean[n];
+		int[] parent = new int[graph.getSize()];
+		Arrays.fill(parent,  -1);
+		List<Integer> order = new ArrayList<>();
+		
+		queue.add(start.index);
+		
+		while (!queue.isEmpty()) {
+			int u = queue.poll();
+			if (visited[u]) continue;
+			visited[u] = true;
+			order.add(u);
+			if (u == goal.index) break;
+			
+			for (Edge edge : neighbors.get(u)) {
+				int v = edge.v;
+				if (!visited[v]) {
+					if (parent[v] == -1) parent[v] = u;
+					queue.add(v);
+				}
 			}
 		}
+		return graph.new SearchTree(start.index, parent, order);
 	}
 }
