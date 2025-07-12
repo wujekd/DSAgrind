@@ -14,4 +14,9 @@ public class Edge {
 		return u == ((Edge)o).u && v ==((Edge)o).v;		 // type cast
 	}
 	
+	@Override
+	public String toString() {
+		return "from: " + u + " to: " + v;
+	}
+	
 }
