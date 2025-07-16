@@ -3,9 +3,8 @@ package Graphs;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
-import Graphs.CostNode;
-
 import Graphs.WeightedGraph.ShortestPathTree;
+
 
 public class MinHeapWithDijakstrasAndPrims {
 
@@ -16,7 +15,7 @@ public class MinHeapWithDijakstrasAndPrims {
 	}
 	
 	
-	public static WeightedGraph<Integer>.ShortestPathTree MHDijakstras(WeightedGraph<Integer> graph, int startVert) {
+	public static ShortestPathTree MHDijakstras(WeightedGraph<Integer> graph, int startVert) {
 		List<List<Edge>> neighbors = graph.getEdges();
 		double[] cost = new double[graph.getSize()];
 		int[] parent = new int[graph.getSize()];
@@ -53,6 +52,6 @@ public class MinHeapWithDijakstrasAndPrims {
 				}
 			}
 		}
-		return graph.new ShortestPathTree(startVert, parent, T, cost);
+		return new ShortestPathTree(startVert, parent, T, cost);
 	}
 }

@@ -26,13 +26,15 @@ public class LocationGraph {
 		
 		UnweightedGraph<LocatedNode> graph = new UnweightedGraph<>(nodes, edges);
 		
-		//graph.printEdges();
-		UnweightedGraph<LocatedNode>.SearchTree result = BeFS(graph, nodes[0], nodes[4]);
+		graph.makeUndirected();
 		
-		System.out.println(result.getPath(4));
+		graph.printEdges();
+		SearchTree result = BeFS(graph, nodes[2], nodes[3]);
+		
+		System.out.println(result.getPath(3));
 	}
 	
-	public static UnweightedGraph<LocatedNode>.SearchTree BeFS(UnweightedGraph<LocatedNode> graph, LocatedNode start, LocatedNode goal){
+	public static SearchTree BeFS(UnweightedGraph<LocatedNode> graph, LocatedNode start, LocatedNode goal){
 		
 		List<List<Edge>> neighbors = graph.getEdges();
 		int n = graph.getSize();
@@ -65,6 +67,6 @@ public class LocationGraph {
 				}
 			}
 		}
-		return graph.new SearchTree(start.index, parent, order);
+		return new SearchTree(start.index, parent, order);
 	}
 }

@@ -3,6 +3,8 @@ package Graphs;
 import java.util.ArrayList;
 import java.util.List;
 
+import Graphs.UnweightedGraph.SearchTree;
+
 public class WeightedGraph<V> extends UnweightedGraph<V> {
 	
 	
@@ -139,6 +141,7 @@ public class WeightedGraph<V> extends UnweightedGraph<V> {
 	//	}
 	// }
 	
+	
 	// Dijakstra's
 	public ShortestPathTree getShortestPath(int sourceVertex) {
 		// setting cost stuff
@@ -178,11 +181,32 @@ public class WeightedGraph<V> extends UnweightedGraph<V> {
 	}
 	
 	
+	public void makeUndirected() { // create reverse edge for all edges
+		
+		for (List<Edge> list : neighbors) {
+			List<Edge> snapshot = new ArrayList<>(list);
+			
+			for (Edge edge : snapshot) {
+				boolean found = false;
+				
+				for (Edge reverse : neighbors.get(edge.v)) {
+					if (reverse.v == edge.u) {
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					double weight = ((WeightedEdge)edge).getWeight();
+					addEdge(edge.v, edge.u, weight);
+					}
+				}
+			}
+		}
 	
 	
-	// TREES
+	// RESULT TREES
 	//public
-	public class MST extends SearchTree {
+	public static class MST extends SearchTree {
 		private double totalWeight;
 		
 		public MST(int root, int[] parent, List<Integer> searchOrder, double totalWeight) {
@@ -195,7 +219,7 @@ public class WeightedGraph<V> extends UnweightedGraph<V> {
 		}
 	}
 	
-	public class ShortestPathTree extends SearchTree {
+	public static class ShortestPathTree extends SearchTree {
 		private double[] cost; // cost[v] = cost from v to source
 		
 		public ShortestPathTree(int source, int[] parent, List<Integer> searchOrder, double[] cost) {

@@ -148,7 +148,7 @@ public class UnweightedGraph<V> {
 	}
 	
 	
-	public class SearchTree {
+	public static class SearchTree {
 		private int root;
 		private int[] parent;
 		private List<Integer> searchOrder;
@@ -194,6 +194,29 @@ public class UnweightedGraph<V> {
 
 		public void setRoot(int root) {
 			this.root = root;
+		}
+	}
+
+
+	public void makeUndirected() {
+		
+		for (List<Edge> list: neighbors) {
+			List<Edge> snapshot = list;
+			
+			for (Edge edge : snapshot) {
+				
+				boolean found = false;
+				
+				for (Edge reverse : neighbors.get(edge.v)) {
+					if (reverse.v == edge.u) {
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					addEdge(edge.v, edge.u);
+				}
+			}
 		}
 	}
 }

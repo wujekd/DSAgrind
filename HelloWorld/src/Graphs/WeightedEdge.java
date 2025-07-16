@@ -9,6 +9,10 @@ public class WeightedEdge extends Edge
 		this.weight = weight;
 	}
 	
+	public double getWeight() {
+		return weight;
+	}
+	
 	@Override
 	public int compareTo(WeightedEdge edge) {
 		if (weight > edge.weight) {
