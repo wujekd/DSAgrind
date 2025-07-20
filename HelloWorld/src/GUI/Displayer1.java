@@ -39,8 +39,8 @@ public class Displayer1 extends Application {
 		
 		gc.setFill(Color.web("#00ffcc"));  // teal
 		
-		gc.fillOval(47,57,6,6);
-		gc.fillOval(447,347,6,6);
+//		gc.fillOval(47,57,6,6);
+//		gc.fillOval(447,347,6,6);
 		
 		gc.setLineWidth(6);
 		
@@ -73,7 +73,7 @@ public class Displayer1 extends Application {
 	    int delayMs = rows * cols * 22;
 	    PauseTransition delay = new PauseTransition(Duration.millis(delayMs));
 	    delay.setOnFinished(e -> {
-	    	SearchTree tree = graph.bfs(0);
+	    	SearchTree tree = graph.dfs(0);
 	    	drawSearch(gc, tree, rows, cols);
 	    });
 	    delay.play();
@@ -81,7 +81,7 @@ public class Displayer1 extends Application {
 	    double delayMs2 = rows * cols * 45 * 2.3;
 	    PauseTransition delay2 = new PauseTransition(Duration.millis(delayMs2));
 	    delay2.setOnFinished(e -> {
-	    	SearchTree tree = graph.bfs(0);
+	    	SearchTree tree = graph.dfs(0);
 	    	drawPath(gc, tree, 6, rows, cols);
 	    });
 //	    delay2.play();
@@ -157,7 +157,7 @@ public class Displayer1 extends Application {
 	                        if (fcell.bottom) gc.strokeLine(fx, fy + cellHeight, fx + cellWidth, fy + cellHeight);
 	                        if (fcell.left)   gc.strokeLine(fx, fy, fx, fy + cellHeight);
 	                    });
-	                    Thread.sleep(13);
+	                    Thread.sleep(8);
 	                }
 	            }
 	        } catch (InterruptedException e) {
@@ -195,7 +195,7 @@ public class Displayer1 extends Application {
 	                        gc.strokeLine(x1, y1, x2, y2);
 	                    });
 
-	                    Thread.sleep(70); // Delay between steps
+	                    Thread.sleep(32); // Delay between steps
 	                }
 	            }
 	        } catch (InterruptedException e) {

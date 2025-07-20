@@ -34,5 +34,4 @@ public class WeightedGraphTest {
 		System.out.println(res3.getSearchOrder());
 		res3.printAllPaths();
 	}
-	
 }

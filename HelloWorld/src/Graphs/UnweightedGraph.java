@@ -219,4 +219,16 @@ public class UnweightedGraph<V> {
 			}
 		}
 	}
+	
+	public double getPathWeight(List<Integer> path) {
+	    double sum = 0;
+	    List<V> verts = getVertices();
+	    for (int i = 1; i < path.size(); i++) {
+	    	// will fail if V isnt Located node
+	        LocatedNode a = (LocatedNode) verts.get(path.get(i-1));
+	        LocatedNode b = (LocatedNode) verts.get(path.get(i));
+	        sum += Math.hypot(a.x - b.x, a.y - b.y);
+	    }
+	    return sum;
+	}
 }

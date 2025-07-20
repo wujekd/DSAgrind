@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import Graphs.UnweightedGraph.SearchTree;
+import Graphs.WeightedGraph.ShortestPathTree;
 
-public class LocationGraph {
+public class LocationGraphsTests {
 
 	public static void main(String[] args) {
 		LocatedNode[] nodes = {
@@ -17,21 +18,30 @@ public class LocationGraph {
 				new LocatedNode(2,4,2),
 				new LocatedNode(3,3,7),
 				new LocatedNode(4,8,4),
-				new LocatedNode(5,7,8)
+				new LocatedNode(5,7,8),
+				new LocatedNode(6,3,9)
 		};
 		int[][] edges = {
 				  {0,1}, {0,2}, {1,3}, {1,4},
-				  {2,4}, {3,5}, {5,4}
+				  {2,4}, {3,5}, {5,4},
+				  {2,6}, {6,3}
 				};
 		
-		UnweightedGraph<LocatedNode> graph = new UnweightedGraph<>(nodes, edges);
+		UnweightedGraph<LocatedNode> graph1 = new UnweightedGraph<>(nodes, edges);
+		graph1.makeUndirected();
+		SearchTree resultBeFS = BeFS(graph1, nodes[2], nodes[3]);
+		System.out.println("Best first Search:");
+		System.out.println(resultBeFS.getPath(3));
+		System.out.printf("Path weight: " + graph1.getPathWeight(resultBeFS.getPath(3)));
 		
-		graph.makeUndirected();
+//		WeightedGraph<LocatedNode> graph2 = new WeightedGraph<>(edges, nodes);
+//		graph2.makeUndirected();
+//		ShortestPathTree resultDijakstras = graph2.getShortestPath(2);
+//		System.out.println("Dijakstra's:");
+//		System.out.println(resultDijakstras.getPath(3));
 		
-		graph.printEdges();
-		SearchTree result = BeFS(graph, nodes[2], nodes[3]);
 		
-		System.out.println(result.getPath(3));
+
 	}
 	
 	public static SearchTree BeFS(UnweightedGraph<LocatedNode> graph, LocatedNode start, LocatedNode goal){

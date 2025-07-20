@@ -36,6 +36,32 @@ public class WeightedGraph<V> extends UnweightedGraph<V> {
 		}
 	}
 	
+	// create weighted graph from Located Nodes
+	@SuppressWarnings("unchecked")
+	public WeightedGraph(int[][] edges, LocatedNode[] nodes){
+		List<LocatedNode> nodeList = new ArrayList<>();
+		for (int i = 0; i < nodes.length; i++) {
+			nodeList.add(nodes[i]);
+		}
+		int[][] weightedEdges = new int[edges.length][3];
+		
+		double dx;
+		double dy;
+		LocatedNode nodeA;
+		LocatedNode nodeB;
+		
+		for (int i = 0; i < edges.length; i++) {
+			nodeA = nodeList.get(edges[i][0]);
+			nodeB = nodeList.get(edges[i][1]);
+			dx = nodeA.x - nodeB.x;
+			dy = nodeA.y - nodeB.y;
+			int distance = (int) Math.sqrt(dx * dx + dy * dy);
+			
+			weightedEdges[i] = new int[] {nodeA.index, nodeB.index, distance};
+		}
+		createWeightedGraph((List<V>) nodeList, weightedEdges);
+	}
+	
 	// from edge arrays
 	private void createWeightedGraph(List<V> vertices, int[][] edges) {
 		this.vertices = vertices;
