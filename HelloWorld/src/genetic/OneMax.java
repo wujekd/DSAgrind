@@ -80,7 +80,7 @@ public class OneMax {
     static void mutate(int[] chromosome) {
         for (int i = 0; i < CHROMOSOME_LENGTH; i++) {
             if (Math.random() < MUTATION_RATE) {
-            	System.out.println("mutation!");
+            	// System.out.println("mutation!");
                 chromosome[i] = 1 - chromosome[i];
             }
         }
