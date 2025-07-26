@@ -1,6 +1,6 @@
 package genetic;
 
-public class Knapsack {
+public class KnapsackUnweighted {
     static final int POPULATION_SIZE = 5;
     static final int CHROMOSOME_LENGTH = 7;
     static final double MUTATION_RATE = 0.01;
@@ -8,12 +8,6 @@ public class Knapsack {
     static final int WEIGHT_LIMIT = 15;
     static final int[] WEIGHTS = {4,7,6,4,3,2,1};
 
-    // concept: 
-    // theres 7 items to choose from
-    // each item has a weight and a value
-    // the knapsack has a weight limit
-    // the goal is to maximize the value of the items in the knapsack
-    // without exceeding the weight limit
 
     public static void main(String[] args) {
         // initial random population
@@ -26,7 +20,6 @@ public class Knapsack {
 //        printPopulation(population);
         
         int generation = 0;
-        
         while (generation < MAX_GENERATIONS) {
         	int[] fitness = new int[POPULATION_SIZE];
         	int bestFitness = 0;
@@ -54,7 +47,7 @@ public class Knapsack {
 				System.out.println("solution found in " + generation + " generation.");
 				System.out.println("chromosome " + (bestIndex + 1) + " : ");
 				printChromosome(population[bestIndex]);
-				printPopulation(population);
+//				printPopulation(population);
 				break;
 			}
     		// breed new population
@@ -62,7 +55,6 @@ public class Knapsack {
 			for (int i = 0; i < POPULATION_SIZE; i++) {
 				int[] parent1 = tournamentSelect(population, fitness);
 				int[] parent2 = tournamentSelect(population, fitness);
-				
 				int[] child = crossover(parent1, parent2);
 				
 				mutate(child);
@@ -87,7 +79,6 @@ public class Knapsack {
 		return population[best].clone();
 	}
     
-    
     static int[] crossover(int[] p1, int[] p2) {
         int[] child = new int[CHROMOSOME_LENGTH];
         int crossoverPoint = (int) (Math.random() * CHROMOSOME_LENGTH);
@@ -100,7 +91,6 @@ public class Knapsack {
     static void mutate(int[] chromosome) {
         for (int i = 0; i < CHROMOSOME_LENGTH; i++) {
             if (Math.random() < MUTATION_RATE) {
-            	// System.out.println("mutation!");
                 chromosome[i] = 1 - chromosome[i];
             }
         }
