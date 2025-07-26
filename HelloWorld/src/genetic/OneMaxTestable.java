@@ -31,17 +31,20 @@ public class OneMaxTestable extends GeneticAlgorithm {
     public static void main(String[] args) {
         OneMaxTestable oneMax = new OneMaxTestable();
         
-        System.out.println("Running OneMax with framework...");
-        oneMax.evolve();
+        System.out.println("Testing OneMax:");
+        GAResult result1 = oneMax.evolve();
+        System.out.println(result1);
         
         OneMaxTestable oneMax2 = new OneMaxTestable();
         oneMax2.setMutationRate(0.05);
         System.out.println("\nTesting with mutation rate 0.05:");
-        oneMax2.evolve();
+        GAResult result2 = oneMax2.evolve();
+        System.out.println(result2);
         
         OneMaxTestable oneMax3 = new OneMaxTestable();
         oneMax3.setPopulationSize(100);
         System.out.println("\nTesting with population size 100:");
-        oneMax3.evolve();
+        GAResult result3 = oneMax3.evolve();
+        System.out.println(result3);
     }
 } 

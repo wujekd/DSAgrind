@@ -24,22 +24,24 @@ public abstract class GeneticAlgorithm {
     public abstract int calculateFitness(int[] chromosome);
     public abstract boolean isSolutionFound(int[] fitness);
     
-    public void evolve() {
+    public GAResult evolve() {
         initializePopulation();
         while (generation < maxGenerations) {
             int[] fitness = evaluatePopulation();
             
             if (isSolutionFound(fitness)) {
                 int bestIndex = findBestChromosome(fitness);
-                System.out.println("Solution found in " + generation + " generations.");
-                printChromosome(population[bestIndex]);
-                return;
+                return new GAResult(true, generation, population[bestIndex], fitness[bestIndex]);
             }
             createNewGeneration(fitness);
             generation++;
         }
-        System.out.println("Max generations reached, no solution found");
+        int[] fitness = evaluatePopulation();
+        int bestIndex = findBestChromosome(fitness);
+        return new GAResult(false, generation, population[bestIndex], fitness[bestIndex]);
     }
+    
+
     
     protected void initializePopulation() {
         population = new int[populationSize][chromosomeLength];
