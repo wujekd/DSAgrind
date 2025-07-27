@@ -20,6 +20,8 @@ public abstract class GeneticAlgorithm {
     
     public int getGeneration() { return generation; }
     public int[][] getPopulation() { return population; }
+    public int getChromosomeLength() { return chromosomeLength; }
+    public int getMaxGenerations() { return maxGenerations; }
     
     public abstract int calculateFitness(int[] chromosome);
     public abstract boolean isSolutionFound(int[] fitness);

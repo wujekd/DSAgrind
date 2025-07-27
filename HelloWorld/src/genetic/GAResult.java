@@ -9,7 +9,7 @@ public class GAResult {
     public GAResult(boolean solutionFound, int generations, int[] bestChromosome, int bestFitness) {
         this.solutionFound = solutionFound;
         this.generations = generations;
-        this.bestChromosome = bestChromosome.clone();
+        this.bestChromosome = bestChromosome.clone(); // copy because its a reference type
         this.bestFitness = bestFitness;
     }
     

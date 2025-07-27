@@ -1,12 +1,11 @@
 package genetic;
 
 public class OneMaxTestable extends GeneticAlgorithm {
-    
-    public OneMaxTestable() {
-        setPopulationSize(50);
-        setChromosomeLength(20);
-        setMutationRate(0.01);
-        setMaxGenerations(1000);
+    public OneMaxTestable(int populationSize, int chromosomeLength, double mutationRate, int maxGenerations) {
+        setPopulationSize(populationSize);
+        setChromosomeLength(chromosomeLength);
+        setMutationRate(mutationRate);
+        setMaxGenerations(maxGenerations);
     }
 
     @Override
@@ -29,22 +28,17 @@ public class OneMaxTestable extends GeneticAlgorithm {
     }
     
     public static void main(String[] args) {
-        OneMaxTestable oneMax = new OneMaxTestable();
+        OneMaxTestable oneMax = new OneMaxTestable(50, 20, 0.01, 1000);
         
-        System.out.println("Testing OneMax:");
         GAResult result1 = oneMax.evolve();
         System.out.println(result1);
         
-        OneMaxTestable oneMax2 = new OneMaxTestable();
-        oneMax2.setMutationRate(0.05);
-        System.out.println("\nTesting with mutation rate 0.05:");
-        GAResult result2 = oneMax2.evolve();
-        System.out.println(result2);
+        oneMax.setMutationRate(0.05);
+        GAResult result2 = oneMax.evolve();
+        System.out.println("\n" + result2);
         
-        OneMaxTestable oneMax3 = new OneMaxTestable();
-        oneMax3.setPopulationSize(100);
-        System.out.println("\nTesting with population size 100:");
-        GAResult result3 = oneMax3.evolve();
-        System.out.println(result3);
+        oneMax.setPopulationSize(100);
+        GAResult result3 = oneMax.evolve();
+        System.out.printf("\n" + result3);
     }
 } 
