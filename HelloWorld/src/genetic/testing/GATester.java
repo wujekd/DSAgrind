@@ -1,13 +1,14 @@
-package genetic;
+package genetic.testing;
 
 import java.util.List;
 import java.util.ArrayList;
+import genetic.GeneticAlgorithm;
 
 public class GATester {
     
     public GATester() {}
     
-    public List<GAResultsForSettings> test(
+    public GATestResults test(
         GeneticAlgorithm ga,
         int steps,
         int populationMin, int populationMax,
@@ -36,7 +37,8 @@ public class GATester {
                 results.add(result);
             }
         }
-        return results;
+        return new GATestResults(steps, populationMin, populationMax, 
+                                mutationRateMin, mutationRateMax, repeat, results);
     }
     
     private List<Integer> generateLinearSteps(int min, int max, int steps) {

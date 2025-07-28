@@ -1,4 +1,4 @@
-package genetic;
+package genetic.testing;
 
 public class GAResult {
     public final boolean solutionFound;

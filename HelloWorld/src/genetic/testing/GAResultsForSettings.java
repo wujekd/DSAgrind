@@ -1,4 +1,4 @@
-package genetic;
+package genetic.testing;
 
 import java.util.List;
 import java.util.ArrayList;

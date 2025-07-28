@@ -1,5 +1,7 @@
 package genetic;
 
+import genetic.testing.GAResult;
+
 public class OneMaxTestable extends GeneticAlgorithm {
     public OneMaxTestable(int populationSize, int chromosomeLength, double mutationRate, int maxGenerations) {
         setPopulationSize(populationSize);
@@ -28,17 +30,11 @@ public class OneMaxTestable extends GeneticAlgorithm {
     }
     
     public static void main(String[] args) {
-        OneMaxTestable oneMax = new OneMaxTestable(50, 20, 0.01, 1000);
+        OneMaxTestable oneMax = new OneMaxTestable(50, 20, 0.01, 10);
         
-        GAResult result1 = oneMax.evolve();
-        System.out.println(result1);
+        genetic.testing.GATester tester = new genetic.testing.GATester();
+        genetic.testing.GATestResults results = tester.test(oneMax, 20, 10, 100, 0.01, 0.07, 10);
         
-        oneMax.setMutationRate(0.05);
-        GAResult result2 = oneMax.evolve();
-        System.out.println("\n" + result2);
-        
-        oneMax.setPopulationSize(100);
-        GAResult result3 = oneMax.evolve();
-        System.out.printf("\n" + result3);
+        results.printSummary();
     }
 } 
