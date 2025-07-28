@@ -16,11 +16,10 @@ public class GAResult {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (solutionFound) {
-            sb.append("Solution found in ").append(generations).append(" generations.\n");
-        } else {
-            sb.append("Max generations reached, no solution found\n");
-        }
+        sb.append("Best Fitness: ").append(bestFitness).append("\n");
+        sb.append("Generations: ").append(generations).append("\n");
+        sb.append("Solution Found: ").append(solutionFound ? "Yes" : "No").append("\n");
+        sb.append("Best Chromosome: ");
         for (int gene : bestChromosome) {
             sb.append(gene);
         }

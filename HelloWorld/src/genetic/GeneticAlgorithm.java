@@ -1,5 +1,7 @@
 package genetic;
 
+import genetic.testing.GAResult;
+
 public abstract class GeneticAlgorithm {
     
     protected int populationSize = 50;
@@ -20,7 +22,9 @@ public abstract class GeneticAlgorithm {
     
     public int getGeneration() { return generation; }
     public int[][] getPopulation() { return population; }
+    public int getPopulationSize() { return populationSize; }
     public int getChromosomeLength() { return chromosomeLength; }
+    public double getMutationRate() { return mutationRate; }
     public int getMaxGenerations() { return maxGenerations; }
     
     public abstract int calculateFitness(int[] chromosome);
@@ -87,7 +91,6 @@ public abstract class GeneticAlgorithm {
         population = newPopulation;
     }
     
-    // Tournament selection (same as your existing implementations)
     protected int[] tournamentSelect(int[] fitness) {
         int tournamentSize = 3;
         int best = (int) (Math.random() * populationSize);
@@ -115,12 +118,5 @@ public abstract class GeneticAlgorithm {
                 chromosome[i] = 1 - chromosome[i];
             }
         }
-    }
-    
-    protected void printChromosome(int[] chromosome) {
-        for (int gene : chromosome) {
-            System.out.print(gene);
-        }
-        System.out.println();
     }
 }

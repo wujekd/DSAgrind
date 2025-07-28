@@ -8,17 +8,15 @@ public class GATester {
     
     public GATester() {}
     
-    public GATestResults test(
+    public GATestResults testRange(
         GeneticAlgorithm ga,
         int steps,
         int populationMin, int populationMax,
         double mutationRateMin, double mutationRateMax,
         int repeat
     ) {
-
         List<Integer> populationSizes = generateLinearSteps(populationMin, populationMax, steps);
         List<Double> mutationRates = generateLinearSteps(mutationRateMin, mutationRateMax, steps);
-        
         List<GAResultsForSettings> results = new ArrayList<>();
         
         for (int popSize : populationSizes) {
@@ -39,6 +37,22 @@ public class GATester {
         }
         return new GATestResults(steps, populationMin, populationMax, 
                                 mutationRateMin, mutationRateMax, repeat, results);
+    }
+    
+    public GAResultsForSettings testSettings(
+        GeneticAlgorithm ga,
+        int repeat
+    ) {
+        List<GAResult> trials = new ArrayList<>();
+        
+        for (int trial = 0; trial < repeat; trial++) {
+            trials.add(ga.evolve());
+        }
+        
+        return new GAResultsForSettings(
+            ga.getPopulationSize(), ga.getChromosomeLength(), 
+            ga.getMutationRate(), ga.getMaxGenerations(), trials
+        );
     }
     
     private List<Integer> generateLinearSteps(int min, int max, int steps) {

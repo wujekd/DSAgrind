@@ -33,7 +33,7 @@ public class OneMaxTestable extends GeneticAlgorithm {
         OneMaxTestable oneMax = new OneMaxTestable(50, 20, 0.01, 10);
         
         genetic.testing.GATester tester = new genetic.testing.GATester();
-        genetic.testing.GATestResults results = tester.test(oneMax, 20, 10, 100, 0.01, 0.07, 10);
+        genetic.testing.GATestResults results = tester.testRange(oneMax, 40, 4, 100, 0.01, 1, 20);
         
         results.printSummary();
     }
