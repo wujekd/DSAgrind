@@ -1,41 +1,36 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-// Get the file path from command line argument
 const filePath = process.argv[2];
 
-if (!filePath) {
-    console.error('Please provide a Java file path');
+if (!filePath || !filePath.endsWith('.java')) {
+    console.error('Usage: node run-java.js <path-to-java-file>');
     process.exit(1);
 }
 
 const projectRoot = '/Users/dw/coding2/DSAgrind/HelloWorld';
-const fileName = path.basename(filePath, '.java');
+const srcDir = path.join(projectRoot, 'src');
 
-// Change to project root
-process.chdir(projectRoot);
+const absoluteFilePath = path.resolve(filePath);
+const relativePath = path.relative(srcDir, absoluteFilePath);
+const className = path.basename(filePath, '.java');
+const packagePath = path.dirname(relativePath);
+
+let javaClassName;
+if (packagePath === '.') {
+    javaClassName = className;
+} else {
+    javaClassName = packagePath.replace(/\//g, '.') + '.' + className;
+}
 
 try {
-    // Read the file to check for package declaration
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    const packageMatch = fileContent.match(/^package\s+([^;]+);/m);
+    console.log(`Compiling: ${absoluteFilePath}`);
+    execSync(`javac "${absoluteFilePath}"`, { cwd: srcDir, stdio: 'inherit' });
     
-    // Compile the file
-    console.log(`Compiling ${filePath}...`);
-    execSync(`javac -d bin "${filePath}"`, { stdio: 'inherit' });
-    
-    // Run the file
-    if (packageMatch) {
-        const packageName = packageMatch[1];
-        console.log(`Running ${packageName}.${fileName}...`);
-        execSync(`java -cp bin ${packageName}.${fileName}`, { stdio: 'inherit' });
-    } else {
-        console.log(`Running ${fileName}...`);
-        execSync(`java -cp bin ${fileName}`, { stdio: 'inherit' });
-    }
+    console.log(`Running: java ${javaClassName}`);
+    execSync(`java ${javaClassName}`, { cwd: srcDir, stdio: 'inherit' });
 } catch (error) {
     console.error('Error:', error.message);
     process.exit(1);
