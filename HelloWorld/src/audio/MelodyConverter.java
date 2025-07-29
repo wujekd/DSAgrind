@@ -6,7 +6,8 @@ import java.util.List;
 public class MelodyConverter {
     private static final int[] C_MAJOR_SCALE = {60, 62, 64, 65, 67, 69, 71, 72};
     private static final int DEFAULT_VELOCITY = 127;
-    private static final double NOTE_LENGTH = 0.25; // 16th note at 120 BPM
+    private static final double NOTE_LENGTH = 0.25;
+    private static final boolean DEBUG_PRINTS = false; // 16th note at 120 BPM
     
     public static class Melody {
         public List<Integer> notes;
@@ -54,6 +55,8 @@ public class MelodyConverter {
     }
     
     public static void printMelody(Melody melody) {
+        if (!DEBUG_PRINTS) return;
+        
         System.out.println("Converted melody:");
         System.out.println("Notes: " + melody.notes);
         System.out.println("Velocities: " + melody.velocities);

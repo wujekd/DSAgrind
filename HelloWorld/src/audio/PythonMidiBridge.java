@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class PythonMidiBridge implements MidiTransmitter {
+    private static final boolean DEBUG_PRINTS = false;
 
     public void streamMelody(MelodyConverter.Melody melody) {
-        System.out.println("Starting to stream melody via Python bridge...");
 
         try {
             String pythonScript = createPythonScript(melody);
@@ -22,9 +22,9 @@ public class PythonMidiBridge implements MidiTransmitter {
             int exitCode = process.waitFor();
 
             if (exitCode == 0) {
-                System.out.println("Python MIDI streaming completed successfully");
+//                System.out.println("Python MIDI streaming completed successfully");
             } else {
-                System.err.println("Python MIDI streaming failed with exit code: " + exitCode);
+//                System.err.println("Python MIDI streaming failed with exit code: " + exitCode);
             }
 
             new File(scriptPath).delete();
@@ -39,6 +39,7 @@ public class PythonMidiBridge implements MidiTransmitter {
         script.append("#!/usr/bin/env python3\n\n");
         script.append("import mido\n");
         script.append("import time\n\n");
+        script.append("DEBUG_PRINTS = ").append(DEBUG_PRINTS ? "True" : "False").append("\n\n");
         script.append("def stream_melody():\n");
         script.append("    try:\n");
         script.append("        with mido.open_output('IAC Driver Bus 1') as port:\n");
@@ -49,18 +50,21 @@ public class PythonMidiBridge implements MidiTransmitter {
             double duration = melody.durations.get(i);
 
             if (velocity > 0 && note > 0) {
-                script.append("            print(f'Sending note ").append(note).append(" (velocity: ").append(velocity).append(", duration: ").append(duration).append("s)')\n");
+                script.append("            if DEBUG_PRINTS:\n");
+                script.append("                print(f'Sending note ").append(note).append(" (velocity: ").append(velocity).append(", duration: ").append(duration).append("s)')\n");
                 script.append("            port.send(mido.Message('note_on', note=").append(note).append(", velocity=").append(velocity).append(", channel=0))\n");
                 script.append("            time.sleep(").append(duration).append(")\n");
                 script.append("            port.send(mido.Message('note_off', note=").append(note).append(", velocity=0, channel=0))\n");
                 script.append("            time.sleep(0.05)\n");
             } else {
-                script.append("            print(f'Rest for ").append(duration).append("s')\n");
+                script.append("            if DEBUG_PRINTS:\n");
+                script.append("                print(f'Rest for ").append(duration).append("s')\n");
                 script.append("            time.sleep(").append(duration).append(")\n");
             }
         }
 
-        script.append("            print('Melody streaming completed')\n");
+        script.append("            if DEBUG_PRINTS:\n");
+        script.append("                print('Melody streaming completed')\n");
         script.append("    except Exception as e:\n");
         script.append("        print(f'Error: {e}')\n\n");
         script.append("if __name__ == '__main__':\n");
