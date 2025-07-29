@@ -1,11 +1,12 @@
 {
-    "editor.quickSuggestions": {
-        "comments": "off",
-        "strings": "off",
-        "other": "off"
+    "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+    "python.pythonPath": "/opt/homebrew/bin/python3",
+    "code-runner.executorMap": {
+        "python": "/opt/homebrew/bin/python3"
     },
-    "editor.suggestOnTriggerCharacters": false,
-    "editor.tabCompletion": "off",
-    "editor.acceptSuggestionOnEnter": "off",
-    "editor.parameterHints.enabled": false
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.runInTerminal": true,
+    "terminal.integrated.env.osx": {
+        "PYTHONPATH": "/opt/homebrew/lib/python3.13/site-packages"
+    }
 }

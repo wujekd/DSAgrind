@@ -13,7 +13,7 @@ public class SimpleAudioPlayer {
     private static final boolean SIGNED = true;
     private static final boolean BIG_ENDIAN = false;
     
-    public static void playMelody(AudioConverter.Melody melody) {
+    public static void playMelody(MelodyConverter.Melody melody) {
         try {
             byte[] audioData = generateAudioData(melody);
             playAudioData(audioData);
@@ -23,7 +23,7 @@ public class SimpleAudioPlayer {
         }
     }
     
-    private static byte[] generateAudioData(AudioConverter.Melody melody) throws IOException {
+    private static byte[] generateAudioData(MelodyConverter.Melody melody) throws IOException {
         ByteArrayOutputStream audioStream = new ByteArrayOutputStream();
         
         for (int i = 0; i < melody.notes.size(); i++) {
@@ -99,7 +99,7 @@ public class SimpleAudioPlayer {
         ais.close();
     }
     
-    public static void playMelodyWithDelay(AudioConverter.Melody melody, long delayMs) {
+    public static void playMelodyWithDelay(MelodyConverter.Melody melody, long delayMs) {
         new Thread(() -> {
             try {
                 Thread.sleep(delayMs);
