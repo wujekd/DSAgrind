@@ -7,6 +7,7 @@ public class KnapsackWeighted extends GeneticAlgorithm {
 	static final int WEIGHT_LIMIT = 15;
 	static final int[] WEIGHTS =	{4,7,6,4,3,2,1};
 	static final int[] COSTS =		{4,7,6,4,7,2,4};
+	static final int SOLUTION = 22;
 	
 	public KnapsackWeighted(int populationSize, double mutationRate, int maxGenerations){
 		setPopulationSize(populationSize);
@@ -36,7 +37,11 @@ public class KnapsackWeighted extends GeneticAlgorithm {
 
 	@Override
 	public boolean isSolutionFound(int[] fitness) {
-		// TODO Auto-generated method stub
+		for (int res : fitness) {
+			if (res == SOLUTION) {
+				return true;
+			}
+		}
 		return false;
 	}
 	
@@ -44,10 +49,10 @@ public class KnapsackWeighted extends GeneticAlgorithm {
 		KnapsackWeighted ga = new KnapsackWeighted(10, 0.02, 10);
 		GATester tester = new GATester();
 		
-//		GAResultsForSettings res = tester.testSettings(ga, 10);
-//		System.out.println(res);
+		GAResultsForSettings resbulk = tester.testSettings(ga, 10);
+		System.out.println(resbulk);
 		
-		GAResult res = ga.evolve();
-		System.out.println(res);
+//		GAResult res = ga.evolve();
+//		System.out.println(res);
 	}
 }
